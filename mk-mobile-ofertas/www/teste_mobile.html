@@ -1,0 +1,241 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SIS-MK Mobile</title>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript"> app.initialize(); </script>
+</head>
+
+<body>
+<div data-role="page" id="page" >
+  <div data-role="header">
+    <h1> Ofertas Bretas Mobile </h1>
+  
+  </div>
+  
+  <div data-role="content" >
+  
+  <a href="#lojas" data-role="button" id="btt_exb_loja" data-relmk="acc"> Veja nossas Ofertas para todas as Lojas Bretas </a>    
+  
+  
+  </div>
+  
+  <div data-role="footer">
+    <h4></h4>
+  </div>
+</div>
+
+
+<div data-role="page" id="lojas" data-rel="back">
+  <div data-role="header">
+    
+    <h1>Pagina Lojas</h1>
+    
+  </div>
+  <div data-role="content" data-theme="e">
+<div id="conteudo"> </div>
+
+
+  
+  </div>
+  <div data-role="footer">
+    <h4>Rodapé</h4>
+  </div></div>
+  
+  
+<div data-role="page" id="secoes">
+  <div data-role="header">
+    <h1>Pagina Seções</h1>
+  </div>
+  <div data-role="content">
+  
+  <div id="conteudo2"> </div></div>
+  
+  <div data-role="footer">
+    <h4>Rodapé</h4>
+  </div>
+</div>
+
+
+<div data-role="page" id="ofertas">
+  <div data-role="header">
+    <h1>Pagina Ofertas</h1>
+  </div>
+  <div data-role="content">
+  
+  <div id="conteudo3"> </div></div>
+  
+  <div data-role="footer">
+    <h4>Rodapé</h4>
+  </div>
+</div>
+</body>
+
+<script type="text/javascript">
+
+function acc_lojas(){				
+	$(document).ready(function() {		
+		$('#btt_exb_loja').on("click",function(){
+			//execut3.preventDefault();
+
+	    var valores = $(this).attr('data-relmk');
+        var caminho = "http://localhost/sis_mark/sis_mk_mobile/pag_saida.php";
+		
+		
+		$.ajax({
+			
+    url: caminho,
+    type: "POST",
+    data: {acc:valores},
+	cache: false,
+    dataType: "html",
+	
+	success: function(resultado){
+      
+	  if(resultado){
+	   $("#conteudo").html(resultado);
+	   
+	     }
+		 
+		 else{
+			alert('Problemas no Ajax'); 
+			 
+			 }
+    }
+	
+		});
+
+	  });
+   });
+}
+
+
+function acc_secao(){
+
+$(document).ready(function() {		
+		$('#conteudo').on("click","#btt_secao",function(){
+			//execut2.preventDefault();
+
+	   
+		var valores1 = $(this).attr('name');
+		var valores2 = $(this).attr('data-relmk');
+        var valores3 = $(this).attr('data-rel2');
+        var caminho2 = "http://localhost/sis_mark/sis_mk_mobile/pag_saida.php";
+		
+		
+		$.ajax({
+			
+    url: caminho2,
+    type: "POST",
+    data: {cod_loja: valores2, btt_abre_secao:valores1, cod_secao: valores3},
+	cache: false,
+    dataType: "html",
+	
+	success: function(resultado2){
+      
+	  if(resultado2){
+	   $("#conteudo2").html(resultado2);
+	   
+	     }
+		 
+		else {
+			alert('erros');
+				}
+    }
+		});
+	  });
+   });
+}
+
+
+function acc_ofertas(){
+
+$(document).ready(function() {		
+		$('#conteudo2').on("click","#btt_ofer",function(){
+			//execut2.preventDefault();
+
+	    var valores = $(this).attr('data-relmk');
+		var valores1 = $(this).attr('data-rel1');		
+        var valores2 = $(this).attr('data-rel2');
+		var valores3 = $(this).attr('data-rel3');
+		var valores4 = $(this).attr('name');
+        var caminho2 = "http://localhost/sis_mark/sis_mk_mobile/pag_saida.php";
+		
+		
+		$.ajax({
+			
+    url: caminho2,
+    type: "POST",
+    data: {cod_secao:valores, cod_loja:valores3, nome_loja:valores2, nome_secao:valores1, abre_ofer_secao:valores4},
+	cache: false,
+    dataType: "html",
+	
+	success: function(resultado3){
+      
+	  if(resultado3){
+	   $("#conteudo3").html(resultado3);
+	   
+	     }
+		 
+		else {
+			alert('erros');
+				}
+    }
+		});
+	  });
+   });
+}
+
+
+function acc_ofertas_total(){
+
+$(document).ready(function() {		
+		$('#conteudo2').on("click","#btt_ofer_total",function(){
+			//execut2.preventDefault();
+
+	    var valores4 = $(this).attr('name');
+		var valores3 = $(this).attr('data-rel3');	
+		var caminho2 = "http://localhost/sis_mark/sis_mk_mobile/pag_saida.php";
+		
+		
+		$.ajax({
+			
+    url: caminho2,
+    type: "POST",
+    data: {cod_loja:valores3, total_ofer_loja:valores4},
+	cache: false,
+    dataType: "html",
+	
+	success: function(resultado3){
+      
+	  if(resultado3){
+	   $("#conteudo3").html(resultado3);
+	   
+	     }
+		 
+		else {
+			alert('erros');
+				}
+    }
+		});
+	  });
+   });
+}
+
+
+
+console.log(acc_lojas());
+console.log(acc_secao());
+console.log(acc_ofertas());
+console.log(acc_ofertas_total());
+  </script>
+
+</html>
